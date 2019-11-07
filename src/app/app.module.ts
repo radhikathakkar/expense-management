@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ExpensePageModule } from './expense/expense.module';
 import { IncomePageModule } from './income/income.module';
+import { LoginPageModule } from './login/login.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { IncomePageModule } from './income/income.module';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
+    LoginPageModule,
     ExpensePageModule,
     IncomePageModule
   ],
