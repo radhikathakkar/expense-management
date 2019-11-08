@@ -1,8 +1,11 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Expense Managemen System
+      Expense Management
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-icon name="more" (click)="openActionSheetData()"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -10,17 +13,23 @@
   <ion-grid>
     <ion-row>
       <ion-col col-12>
-        <ion-card>
-          <ion-card-header>
+        <ion-card class="feature-list">
+          <ion-card-header class="amount-title">
             <ion-card-title class="total-amount">Total Amount : {{totalAmount}} INR</ion-card-title>
           </ion-card-header>
-          <ion-card-content  class="ion-text-center">
-            <ion-button color="danger" (click)="openExpenseModal()">
-              <ion-icon name="add"></ion-icon> Add Expense
-            </ion-button>
-            <ion-button color="success" (click)="openIncomeModal()">
-              <ion-icon name="add"></ion-icon> Add Income
-            </ion-button>
+          <ion-card-content>
+            <ion-item (click)="viewExpenses()">
+              Expenses List
+              <ion-buttons slot="end">
+                  <ion-icon name="eye"></ion-icon>
+              </ion-buttons>
+            </ion-item>
+            <ion-item (click)="viewIncome()">
+                Incomes List
+                <ion-buttons slot="end">
+                    <ion-icon name="eye"></ion-icon>
+                </ion-buttons>
+              </ion-item>
           </ion-card-content>
         </ion-card>
       </ion-col>

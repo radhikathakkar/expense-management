@@ -7,6 +7,8 @@ const routes: Routes = [
   { path: 'expense', loadChildren: './expense/expense.module#ExpensePageModule' },
   { path: 'income', loadChildren: './income/income.module#IncomePageModule' },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' },
+  { path: 'expense-list', loadChildren: './expense-list/expense-list.module#ExpenseListPageModule' },
+  { path: 'income-list', loadChildren: './income-list/income-list.module#IncomeListPageModule' },
 ];
 
 @NgModule({

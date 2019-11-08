@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-icon name="arrow-back" (click)="backToMenu()"></ion-icon>
+        </ion-buttons>
+    <ion-title>expense-list</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-list *ngFor="let expense of allExpenses">
+        <ion-item>
+          <ion-label> {{expense.reason}} </ion-label>
+          <ion-label slot="end"> {{expense.amount}} </ion-label>
+        </ion-item>
+      </ion-list>
+</ion-content>

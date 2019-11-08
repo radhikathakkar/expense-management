@@ -1,5 +1,22 @@
+$amount-title-space: 30px;
+$total-height: 450px;
+$expense-color: red;
+
+// .myPage {
+//     .myActionSheetBtnStyle {
+//         color: red;
+//     }
+// }
+
 
 .total-amount{
     font-size: 18px;
     float: right;
+}
+
+.feature-list {
+    height: $total-height;
+    .amount-title{
+        margin-bottom: $amount-title-space;
+    }
 }
