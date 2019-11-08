@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { User } from '../shared/user';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { AngularFirestore } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-login',
@@ -13,7 +15,10 @@ export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
   user: User = { username: 'admin', password: 'admin' };
-  constructor(private fb: FormBuilder, private toastCtrl: ToastController, private router: Router) {
+  users: any;
+  constructor(private fb: FormBuilder, private toastCtrl: ToastController, private router: Router, private db: AngularFirestore) {
+    this.users = db.collection('user');
+    console.log('users from firebase == ', this.users);
     this.createLoginForm();
   }
 
