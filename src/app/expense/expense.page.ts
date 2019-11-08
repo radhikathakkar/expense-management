@@ -13,7 +13,7 @@ export class ExpensePage implements OnInit {
 
   constructor(private modalCtrl: ModalController, private fb: FormBuilder) {
     this.createExpenseForm();
-   }
+  }
 
   ngOnInit() {
   }
@@ -30,7 +30,6 @@ export class ExpensePage implements OnInit {
   }
 
   onSubmit = () => {
-    // console.log(this.addExpenseForm.value.amount);
     this.modalCtrl.dismiss(this.addExpenseForm.value);
   }
 

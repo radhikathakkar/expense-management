@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { ModalController, NavParams } from '@ionic/angular';
 @Component({
   selector: 'app-expense-list',
   templateUrl: './expense-list.page.html',
@@ -8,18 +9,19 @@ import { Storage } from '@ionic/storage';
 })
 export class ExpenseListPage implements OnInit {
 
-  allExpenses: any;
-  constructor(private router: Router, private storage: Storage) {
-   console.log('constructor calling ... . ');
-   this.storage.get('expense').then((data) => {
-    this.allExpenses = data;
-    console.log('allExpenses at sub class thennn=', this.allExpenses);
-   });
+  allExpenses: any = [];
+  constructor(private navParams: NavParams, private modalCtrl: ModalController) {
+    this.allExpenses = this.navParams.get('expense');
   }
   ngOnInit() {
   }
 
   backToMenu = () => {
-    this.router.navigate(['/home']);
+    this.modalCtrl.dismiss();
+  }
+  removeExpense = (item: any) => {
+    const index = this.allExpenses.indexOf(item);
+    this.allExpenses.splice(index, 1);
+    this.modalCtrl.dismiss(item);
   }
 }

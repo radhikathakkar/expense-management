@@ -1,19 +1,19 @@
 <ion-header>
   <ion-toolbar>
-      <ion-buttons slot="start">
-          <ion-icon name="arrow-back" (click)="backToMenu()"></ion-icon>
-        </ion-buttons>
+    <ion-buttons slot="start">
+      <ion-icon name="arrow-back" (click)="backToMenu()"></ion-icon>
+    </ion-buttons>
     <ion-title>income-list</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
 
-    <ion-list *ngFor="let income of allIncome">
-        <ion-item>
-          <ion-label> {{income.reason}} </ion-label>
-          <ion-label slot="end"> {{income.amount}} </ion-label>
-        </ion-item>
-      </ion-list>
+  <ion-list *ngFor="let income of allIncome">
+    <ion-item>
+      <ion-label> {{income.reason}} </ion-label>
+      <ion-label slot="end"> {{income.amount}} </ion-label>
+    </ion-item>
+  </ion-list>
 
 </ion-content>

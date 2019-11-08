@@ -11,6 +11,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { ExpensePageModule } from './expense/expense.module';
 import { IncomePageModule } from './income/income.module';
 import { LoginPageModule } from './login/login.module';
+import { ExpenseListPageModule } from './expense-list/expense-list.module';
+import { IncomeListPageModule } from './income-list/income-list.module';
 
 
 const firebaseConfig = {
@@ -33,7 +35,9 @@ const firebaseConfig = {
     AppRoutingModule,
     LoginPageModule,
     ExpensePageModule,
-    IncomePageModule
+    IncomePageModule,
+    ExpenseListPageModule,
+    IncomeListPageModule
   ],
   providers: [
     StatusBar,
@@ -42,4 +46,4 @@ const firebaseConfig = {
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

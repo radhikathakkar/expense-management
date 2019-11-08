@@ -5,6 +5,8 @@ import { IncomePage } from '../income/income.page';
 import { AmountFormat } from '../shared/amount';
 import { Router, NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { ExpenseListPage } from '../expense-list/expense-list.page';
+import { IncomeListPage } from '../income-list/income-list.page';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +23,12 @@ export class HomePage {
   incomeData: AmountFormat;
   incomeAmount: number;
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, private actionSheetCtrl: ActionSheetController,
-              private router: Router, private navCtrl: NavController, private storage: Storage) {}
+              private router: Router, private navCtrl: NavController, private storage: Storage) { }
 
   openExpenseModal = async () => {
     const modal = this.modalCtrl.create({
       component: ExpensePage,
-      componentProps: {value: this.expenseData}
+      componentProps: { value: this.expenseData }
     });
     (await modal).onDidDismiss().then((expense: any) => {
       this.handleExpenseModalDismiss(expense.data);
@@ -45,7 +47,7 @@ export class HomePage {
   openIncomeModal = async () => {
     const modal = this.modalCtrl.create({
       component: IncomePage,
-      componentProps: {value: this.incomeData}
+      componentProps: { value: this.incomeData }
     });
     (await modal).onDidDismiss().then((income: any) => this.handleIncomeModalDismiss(income.data));
     (await modal).present();
@@ -59,7 +61,7 @@ export class HomePage {
   }
 
   openActionSheetData = async () => {
-    const actionSheet =  this.actionSheetCtrl.create({
+    const actionSheet = this.actionSheetCtrl.create({
       header: '',
       cssClass: 'myPage',
       buttons: [
@@ -79,10 +81,11 @@ export class HomePage {
           }
         },
         {
-          text: 'Close',
+          text: 'Cancel',
           icon: 'close',
+          role: 'cancel',
           handler: () => {
-            // this.openIncomeModal();
+            console.log('Cancel clicked');
           }
         }
       ]
@@ -90,14 +93,39 @@ export class HomePage {
     (await actionSheet).present();
   }
 
-  viewExpenses = () => {
-    this.storage.set('expense', this.expenseArr);
-    this.navCtrl.navigateForward(['expense-list']);
+  viewExpenses = async () => {
+    const modal = this.modalCtrl.create({
+      component: ExpenseListPage,
+      componentProps: { expense: this.expenseArr }
+    });
+    (await modal).onDidDismiss().then((expense: any) => {
+      this.handleExpenseListModalDismiss(expense.data);
+    });
+    (await modal).present();
+  }
+  handleExpenseListModalDismiss = (data) => {
+    if (!data) {
+      return false;
+    } else {
+      this.totalAmount += data.amount;
+    }
   }
 
-  viewIncome = () => {
-    // console.log(this.incomeArr);
-    this.storage.set('income', this.incomeArr);
-    this.navCtrl.navigateForward(['income-list']);
+  viewIncome = async () => {
+    const modal = this.modalCtrl.create({
+      component: IncomeListPage,
+      componentProps: { income: this.incomeArr }
+    });
+    (await modal).onDidDismiss().then((income: any) => {
+      this.handleIncomeListModalDismiss(income.data);
+    });
+    (await modal).present();
+  }
+
+  handleIncomeListModalDismiss = (data) => {
+  }
+
+  logout = () => {
+    this.router.navigate(['/']);
   }
 }

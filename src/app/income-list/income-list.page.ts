@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
+import { NavParams, ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-income-list',
@@ -9,18 +10,14 @@ import { Storage } from '@ionic/storage';
 })
 export class IncomeListPage implements OnInit {
   allIncome: any;
-  constructor(private router: Router, private storage: Storage) {
-   console.log('constructor calling ... . ');
-   this.storage.get('income').then((data) => {
-    this.allIncome = data;
-    console.log('allIncome at sub class thennn=', this.allIncome);
-   });
+  constructor(private navParams: NavParams, private modalCtrl: ModalController) {
+    this.allIncome = this.navParams.get('income');
   }
 
   ngOnInit() {
   }
 
   backToMenu = () => {
-    this.router.navigate(['/home']);
+    this.modalCtrl.dismiss();
   }
 }

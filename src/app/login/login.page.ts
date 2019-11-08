@@ -12,10 +12,10 @@ import { Router } from '@angular/router';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
-  user: User = {username: 'admin', password: 'admin'};
-  constructor(private  fb: FormBuilder, private toastCtrl: ToastController, private router: Router) {
+  user: User = { username: 'admin', password: 'admin' };
+  constructor(private fb: FormBuilder, private toastCtrl: ToastController, private router: Router) {
     this.createLoginForm();
-   }
+  }
 
   ngOnInit() {
   }
@@ -30,12 +30,12 @@ export class LoginPage implements OnInit {
   onSubmit = async () => {
     console.log(this.loginForm.value);
     if (this.user.username === this.loginForm.value.username && this.user.password === this.loginForm.value.password) {
-        const toast = this.toastCtrl.create({
-          message: 'Successfully Logged In..',
-          duration: 3000
-        });
-        (await toast).present();
-        this.router.navigate(['home']);
+      const toast = this.toastCtrl.create({
+        message: 'Successfully Logged In..',
+        duration: 3000
+      });
+      (await toast).present();
+      this.router.navigate(['home']);
     } else {
       const toast = this.toastCtrl.create({
         message: 'User Details are wrong',

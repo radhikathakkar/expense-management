@@ -13,7 +13,7 @@ export class IncomePage implements OnInit {
 
   constructor(private modalCtrl: ModalController, private fb: FormBuilder) {
     this.createIncomeForm();
-   }
+  }
 
   ngOnInit() {
   }
@@ -30,7 +30,6 @@ export class IncomePage implements OnInit {
   }
 
   onSubmit = () => {
-    // console.log(this.addIncomeForm.value.amount);
     this.modalCtrl.dismiss(this.addIncomeForm.value);
   }
 
