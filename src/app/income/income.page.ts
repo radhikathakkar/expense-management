@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { AngularFirestore } from '@angular/fire/firestore';
+import * as firebase from 'firebase';
+import { firebaseConfig } from '../firebase';
+import { FirebaseService } from '../services/firebase.service';
+firebase.initializeApp(firebaseConfig);
+const database = firebase.database();
 
 @Component({
   selector: 'app-income',
@@ -11,7 +17,7 @@ export class IncomePage implements OnInit {
 
   addIncomeForm: FormGroup;
 
-  constructor(private modalCtrl: ModalController, private fb: FormBuilder) {
+  constructor(private modalCtrl: ModalController, private fb: FormBuilder, private firebaseService: FirebaseService) {
     this.createIncomeForm();
   }
 
@@ -30,7 +36,13 @@ export class IncomePage implements OnInit {
   }
 
   onSubmit = () => {
-    this.modalCtrl.dismiss(this.addIncomeForm.value);
+    console.log('this.addIncomeForm.value = ', this.addIncomeForm.value);
+    const incomeObj = this.addIncomeForm.value;
+    this.firebaseService.addItem(incomeObj.amount, incomeObj.reason)
+    .then((res) => {
+      console.log(res);
+    });
+    this.modalCtrl.dismiss(incomeObj);
   }
 
 }

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ModalController, ToastController, ActionSheetController, NavController } from '@ionic/angular';
 import { ExpensePage } from '../expense/expense.page';
 import { IncomePage } from '../income/income.page';
-import { AmountFormat } from '../shared/amount';
+import { DataFormat } from '../shared/DataFormat';
 import { Router, NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ExpenseListPage } from '../expense-list/expense-list.page';
@@ -17,10 +17,10 @@ export class HomePage {
 
   totalAmount = 10000;
   expenseAmount: number;
-  expenseData: AmountFormat;
+  expenseData: DataFormat;
   expenseArr: any = [];
   incomeArr: any = [];
-  incomeData: AmountFormat;
+  incomeData: DataFormat;
   incomeAmount: number;
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, private actionSheetCtrl: ActionSheetController,
               private router: Router, private navCtrl: NavController, private storage: Storage) { }
