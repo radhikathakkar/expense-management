@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-expense',
@@ -11,7 +12,7 @@ export class ExpensePage implements OnInit {
 
   addExpenseForm: FormGroup;
 
-  constructor(private modalCtrl: ModalController, private fb: FormBuilder) {
+  constructor(private modalCtrl: ModalController, private fb: FormBuilder, private firebaseService: FirebaseService) {
     this.createExpenseForm();
   }
 
@@ -29,8 +30,13 @@ export class ExpensePage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  onSubmit = () => {
-    this.modalCtrl.dismiss(this.addExpenseForm.value);
+  onSubmit = async () => {
+    const expenseObj = this.addExpenseForm.value;
+    this.firebaseService.addExpense(expenseObj.amount, expenseObj.reason)
+    .then((res) => {
+      console.log('res at add expense', res);
+    });
+    this.modalCtrl.dismiss(expenseObj);
   }
 
 }

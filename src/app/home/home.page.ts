@@ -7,6 +7,7 @@ import { Router, NavigationExtras } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ExpenseListPage } from '../expense-list/expense-list.page';
 import { IncomeListPage } from '../income-list/income-list.page';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ import { IncomeListPage } from '../income-list/income-list.page';
 })
 export class HomePage {
 
-  totalAmount = 10000;
+  totalAmount: any ;
   expenseAmount: number;
   expenseData: DataFormat;
   expenseArr: any = [];
@@ -23,8 +24,23 @@ export class HomePage {
   incomeData: DataFormat;
   incomeAmount: number;
   constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, private actionSheetCtrl: ActionSheetController,
-              private router: Router, private navCtrl: NavController, private storage: Storage) { }
+              private router: Router, private firebaseService: FirebaseService, private storage: Storage) { 
+                this.totalAmountHandler();
+              }
 
+
+  totalAmountHandler = async () => {
+    this.firebaseService.totalAmountData()
+    .subscribe(total => console.log('total at amount handler  = ', total));
+    console.log(this.totalAmount);
+    if (this.totalAmount < 0) {
+      const toast = this.toastCtrl.create({
+        message: 'Your expenses are too high please take care !!',
+        duration: 3000
+      });
+      (await toast).present();
+    }
+  }
   openExpenseModal = async () => {
     const modal = this.modalCtrl.create({
       component: ExpensePage,

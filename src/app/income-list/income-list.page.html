@@ -8,7 +8,9 @@
 </ion-header>
 
 <ion-content>
-
+  <div *ngIf="loading">
+      <ion-spinner name="crescent" color="Secondary"></ion-spinner>
+  </div>
   <ion-list *ngFor="let income of allIncome">
     <ion-item>
       <ion-label> {{income.reason}} </ion-label>

@@ -9,6 +9,9 @@
 
 <ion-content>
 
+  <div *ngIf="loading">
+    <ion-spinner name="crescent" color="Secondary"></ion-spinner>
+  </div>
   <ion-list *ngFor="let expense of allExpenses">
     <ion-item>
       <ion-label> {{expense.reason}} </ion-label>
