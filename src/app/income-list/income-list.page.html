@@ -12,6 +12,10 @@
       <ion-spinner name="crescent" color="Secondary"></ion-spinner>
   </div>
   <ion-list *ngFor="let income of allIncome">
+      <ion-item>
+          <ion-label> Reason </ion-label>
+          <ion-label slot="end"> Amount </ion-label>
+        </ion-item>
     <ion-item>
       <ion-label> {{income.reason}} </ion-label>
       <ion-label slot="end"> {{income.amount}} </ion-label>

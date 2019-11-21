@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar>
+      <ion-buttons slot="start">
+          <ion-icon name="arrow-back" (click)="backToMenu()"></ion-icon>
+        </ion-buttons>
+    <ion-title>register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+     <ion-input type="email" formControlName="email" placeholder="Email"></ion-input>
+    
+    </ion-item>
+   
+    <ion-item>
+      <ion-input type="text" formControlName="username" placeholder="Username"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" formControlName="confirmPassword" placeholder="Confirm Password"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-input type="tel" formControlName="contactNumber" placeholder="Contact Number"></ion-input>
+      </ion-item>
+    <ion-button type="submit" color="success" [disabled]="!registerForm.valid">Register</ion-button>
+  </form>
+
+</ion-content>

@@ -24,15 +24,17 @@ export class IncomeListPage implements OnInit {
   }
 
   getItems() {
-    const incomeList = this.firebaseService.getIcome().subscribe(res => {
-     if (res) {
-      this.loading = false;
-      this.allIncome = res;
-     } else {
-      this.loading = true;
-     }
+    const incomeList = this.firebaseService.getIcome()
+    .subscribe(res => {
+      if (res) {
+        this.loading = false;
+        res.map(ele => {
+          this.allIncome =  ele.income;
+        });
+      }
     });
   }
+
   backToMenu = () => {
     this.modalCtrl.dismiss();
   }

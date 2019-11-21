@@ -8,13 +8,16 @@
 
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
     <ion-item>
-      <ion-input type="text" formControlName="username" placeholder="username"></ion-input>
+      <ion-input type="text" formControlName="username" placeholder="username" required> </ion-input>
     </ion-item>
     <ion-item>
-      <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
+      <ion-input type="password" formControlName="password" placeholder="Password" required></ion-input>
     </ion-item>
-    <ion-button type="submit" color="success">Login</ion-button>
+    <ion-button type="submit" color="success" [disabled]="!loginForm.valid">Login</ion-button>
   </form>
 
-  <!-- <ion-button type="submit" color="success" (click)="googleSingin()">Login with Google</ion-button> -->
+<h3>New User? 
+    <ion-button type="submit" color="success" (click)="registerUser()">Register Here</ion-button>
+</h3>
+  
 </ion-content>

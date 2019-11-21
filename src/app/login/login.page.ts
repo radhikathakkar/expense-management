@@ -7,6 +7,7 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { auth } from 'firebase/app';
 import { LoginService } from '../services/login.service';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { FirebaseService } from '../services/firebase.service';
 
 
 
@@ -18,10 +19,10 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class LoginPage implements OnInit {
 
   loginForm: FormGroup;
-  user: User = { username: 'admin@admin.com', password: 'admin' };
+  user: any;
   users: any;
   constructor(private fb: FormBuilder, private toastCtrl: ToastController, private router: Router, private fAuth: AngularFireAuth,
-              private loginService: LoginService, private aFirestore: AngularFirestore) {
+              private firebaseService: FirebaseService, private aFirestore: AngularFirestore) {
     this.createLoginForm();
   }
 
@@ -43,7 +44,9 @@ export class LoginPage implements OnInit {
         console.log(res.user);
         if (res.user) {
           this.aFirestore.doc(`users/${res.user.uid}`).set({
-            username
+            uid : res.user.uid,
+            username,
+            password
           });
           const toast = this.toastCtrl.create({
             message: 'Successfully Logged In..',
@@ -62,9 +65,8 @@ export class LoginPage implements OnInit {
       });
   }
 
-  async googleSingin() {
-    const provider = new auth.GoogleAuthProvider();
-    const credential = await this.fAuth.auth.signInWithPopup(provider);
-    console.log('credential =', credential);
+
+  registerUser = () => {
+    this.router.navigate(['register']);
   }
 }

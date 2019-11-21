@@ -17,7 +17,7 @@ const database = firebase.database();
 export class IncomePage implements OnInit {
 
   addIncomeForm: FormGroup;
-
+  amountId: string;
   constructor(private modalCtrl: ModalController, private fb: FormBuilder, private firebaseService: FirebaseService) {
     this.createIncomeForm();
   }
@@ -37,13 +37,13 @@ export class IncomePage implements OnInit {
   }
 
   onSubmit = async () => {
-    console.log('this.addIncomeForm.value = ', this.addIncomeForm.value);
-    const incomeObj = this.addIncomeForm.value;
-    this.firebaseService.addIncome(incomeObj.amount, incomeObj.reason)
+    const incomeArr = [];
+    incomeArr.push(this.addIncomeForm.value);
+    this.firebaseService.addIncome(this.amountId, incomeArr)
     .then((res) => {
       console.log('res at add income', res);
     });
-    this.modalCtrl.dismiss(incomeObj);
+    this.modalCtrl.dismiss(incomeArr);
   }
 
 }
