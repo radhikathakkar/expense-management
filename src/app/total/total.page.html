@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>total</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="addTotalAmountForm" (ngSubmit)="onSubmit()">
+    <ion-item>
+      <ion-input type="text" formControlName="totalAmount" placeholder="Total Amount" required> </ion-input>
+    </ion-item>
+    <ion-button type="submit" color="success" [disabled]="!addTotalAmountForm.valid">Add Total Amount</ion-button>
+  </form>
+  <ion-button type="submit" color="danger" (click)="skip()">Skip to Add</ion-button>
+</ion-content>

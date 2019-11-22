@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { User } from '../shared/user';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Amount } from '../shared/amount';
+import { firestore } from 'firebase';
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +51,7 @@ export class FirebaseService {
   }
   addTotalAmount = (totalAmount) => {
     return this.fireStore.doc(`amount`).set({
-      totalAmount
+      totalAmount,
     });
   }
   getTotal = () => {
@@ -58,10 +60,14 @@ export class FirebaseService {
   getTotalById = () => {
     return this.fireStore.collection<any>('amount').snapshotChanges();
   }
-  setTotal = (totalAmount: number) => {
+  setTotal = (data: Amount) => {
     const totalId = this.fireStore.createId();
     return this.fireStore.doc(`total/${totalId}`).set({
-      totalAmount
+      data
     });
+  }
+
+  loginCredential = () => {
+    return this.fireStore.collection<any>('users').valueChanges();
   }
 }

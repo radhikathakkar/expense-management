@@ -17,6 +17,7 @@ import { IncomeListPageModule } from './income-list/income-list.module';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { firebaseConfig } from './firebase';
 import { LoginService } from './services/login.service';
+import { TotalPageModule } from './total/total.module';
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -33,6 +34,7 @@ import { LoginService } from './services/login.service';
     IncomePageModule,
     ExpenseListPageModule,
     IncomeListPageModule,
+    TotalPageModule
   ],
   providers: [
     StatusBar,

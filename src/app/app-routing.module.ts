@@ -10,6 +10,7 @@ const routes: Routes = [
   { path: 'expense-list', loadChildren: './expense-list/expense-list.module#ExpenseListPageModule' },
   { path: 'income-list', loadChildren: './income-list/income-list.module#IncomeListPageModule' },
   { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+  { path: 'total', loadChildren: './total/total.module#TotalPageModule' },
 ];
 
 @NgModule({

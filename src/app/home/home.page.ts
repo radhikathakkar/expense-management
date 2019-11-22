@@ -47,9 +47,9 @@ export class HomePage implements OnInit {
       console.log('res by id = ', res);
     });
   }
-  setTotal = () => {
-    this.firebaseService.setTotal(this.totalAmount);
-  }
+  // setTotal = () => {
+  //   this.firebaseService.setTotal(this.totalAmount);
+  // }
 
   openExpenseModal = async () => {
     const modal = this.modalCtrl.create({
@@ -68,7 +68,7 @@ export class HomePage implements OnInit {
     this.storage.set('expense', this.expenseArr);
     this.expenseAmount = expenseData.amount;
     this.totalAmount = this.totalAmount - this.expenseAmount;
-    this.setTotal();
+    // this.setTotal();
   }
 
   openIncomeModal = async () => {
@@ -85,7 +85,7 @@ export class HomePage implements OnInit {
     this.storage.set('income', this.incomeArr);
     this.incomeAmount = incomeData.amount;
     this.totalAmount = this.totalAmount + this.incomeAmount;
-    this.setTotal();
+    // this.setTotal();
   }
 
   openActionSheetData = async () => {
