@@ -5,19 +5,29 @@
 </ion-header>
 
 <ion-content>
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-input type="text" formControlName="username" placeholder="username" required> </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input type="password" formControlName="password" placeholder="Password" required></ion-input>
+        </ion-item>
+        <ion-button type="submit" color="success" [disabled]="!loginForm.valid">Login</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item>
+          New User?
+          <ion-button type="submit" color="success" (click)="registerUser()" slot="end">Register Here</ion-button>
+        </ion-item>
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-    <ion-item>
-      <ion-input type="text" formControlName="username" placeholder="username" required> </ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-input type="password" formControlName="password" placeholder="Password" required></ion-input>
-    </ion-item>
-    <ion-button type="submit" color="success" [disabled]="!loginForm.valid">Login</ion-button>
-  </form>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-<h3>New User? 
-    <ion-button type="submit" color="success" (click)="registerUser()">Register Here</ion-button>
-</h3>
-  
 </ion-content>
