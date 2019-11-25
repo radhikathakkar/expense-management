@@ -18,11 +18,13 @@ export class IncomePage implements OnInit {
 
   addIncomeForm: FormGroup;
   amountId: string;
+  userId: string;
   constructor(private modalCtrl: ModalController, private fb: FormBuilder, private firebaseService: FirebaseService) {
     this.createIncomeForm();
   }
 
   ngOnInit() {
+    this.userId = localStorage.getItem('userId');
   }
 
   createIncomeForm = () => {
@@ -37,13 +39,12 @@ export class IncomePage implements OnInit {
   }
 
   onSubmit = async () => {
-    const incomeArr = [];
-    incomeArr.push(this.addIncomeForm.value);
-    this.firebaseService.addIncome(this.amountId, incomeArr)
+    const incomeObj = this.addIncomeForm.value;
+    this.firebaseService.addIncome(this.userId, incomeObj.amount, incomeObj.reason)
     .then((res) => {
       console.log('res at add income', res);
     });
-    this.modalCtrl.dismiss(incomeArr);
+    this.modalCtrl.dismiss(incomeObj);
   }
 
 }

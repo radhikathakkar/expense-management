@@ -34,13 +34,13 @@ import { TotalPageModule } from './total/total.module';
     IncomePageModule,
     ExpenseListPageModule,
     IncomeListPageModule,
-    TotalPageModule
+    TotalPageModule,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    LoginService
+    LoginService,
   ],
   bootstrap: [AppComponent]
 })

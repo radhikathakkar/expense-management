@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { ModalController } from '@ionic/angular';
+import { FirebaseService } from '../services/firebase.service';
 
 @Component({
   selector: 'app-total',
@@ -12,13 +13,15 @@ export class TotalPage implements OnInit {
 
   addTotalAmountForm: FormGroup;
   userId: string;
-  constructor(private fb: FormBuilder, private router: Router, private modalCtrl: ModalController) {
+  totalAmount: number;
+  constructor(private fb: FormBuilder, private router: Router, private modalCtrl: ModalController,
+              private firebaseServive: FirebaseService) {
     this.addTotal();
   }
 
   ngOnInit() {
-    console.log('modal opens == ');
-    console.log('userId = ', this.userId);
+    // console.log('modal opens == ');
+    // console.log('userId = ', this.userId);
   }
 
   addTotal = () => {
@@ -28,13 +31,32 @@ export class TotalPage implements OnInit {
   }
 
   onSubmit = () => {
-    console.log(this.addTotalAmountForm.value);
+    this.totalAmount = this.addTotalAmountForm.value.totalAmount;
+    const navigationExtras: NavigationExtras = {
+      queryParams: {
+          userId: this.userId,
+          totalAmount: this.totalAmount
+      }
+    };
     this.modalCtrl.dismiss();
-    this.router.navigate(['home']);
+    this.router.navigate(['home'], navigationExtras);
   }
 
   skip = () => {
+    this.firebaseServive.getAmountData(this.userId)
+    .subscribe(res => {
+      if (res) {
+        this.totalAmount = res.totalAmount;
+        const navigationExtras: NavigationExtras = {
+          queryParams: {
+              userId: this.userId,
+              totalAmount: this.totalAmount
+          }
+        };
+        this.router.navigate(['home'], navigationExtras );
+      }
+    });
+    console.log('', this.totalAmount);
     this.modalCtrl.dismiss();
-    this.router.navigate(['home']);
   }
 }

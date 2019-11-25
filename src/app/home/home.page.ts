@@ -3,7 +3,7 @@ import { ModalController, ToastController, ActionSheetController, NavController 
 import { ExpensePage } from '../expense/expense.page';
 import { IncomePage } from '../income/income.page';
 import { DataFormat } from '../shared/DataFormat';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { Storage } from '@ionic/storage';
 import { ExpenseListPage } from '../expense-list/expense-list.page';
 import { IncomeListPage } from '../income-list/income-list.page';
@@ -25,21 +25,20 @@ export class HomePage implements OnInit {
   incomeAmount: number;
   loading = true;
   amountId: string;
-  constructor(private modalCtrl: ModalController, private toastCtrl: ToastController, private actionSheetCtrl: ActionSheetController,
+  userid: string;
+  constructor(private modalCtrl: ModalController, private actionSheetCtrl: ActionSheetController, private route: ActivatedRoute,
               private router: Router, private firebaseService: FirebaseService, private storage: Storage) {
   }
 
   ngOnInit() {
-    this.getData();
-    this.getDataById();
-  }
-  getData = () => {
-    this.firebaseService.getTotal()
-    .subscribe(data => {
-      data.map(val => {
-        this.totalAmount =  val.totalAmount;
-      });
+    this.route.queryParams.subscribe(params => {
+      this.userid = params['userId'];
+      this.totalAmount = parseFloat(params['totalAmount']);
     });
+  }
+  getData = (value) => {
+    this.userid = value;
+    console.log('userid at home page', this.userid);
   }
   getDataById = () => {
     this.firebaseService.getTotalById()
@@ -47,14 +46,11 @@ export class HomePage implements OnInit {
       console.log('res by id = ', res);
     });
   }
-  // setTotal = () => {
-  //   this.firebaseService.setTotal(this.totalAmount);
-  // }
 
   openExpenseModal = async () => {
     const modal = this.modalCtrl.create({
       component: ExpensePage,
-      componentProps: { value: this.expenseData }
+      componentProps: { value: this.expenseData, userId: this.userid }
     });
     (await modal).onDidDismiss().then((expense: any) => {
       this.handleExpenseModalDismiss(expense.data);
@@ -63,12 +59,13 @@ export class HomePage implements OnInit {
   }
 
   handleExpenseModalDismiss = (expenseData: any) => {
+    
     this.expenseData = expenseData;
     this.expenseArr.push(expenseData);
     this.storage.set('expense', this.expenseArr);
     this.expenseAmount = expenseData.amount;
     this.totalAmount = this.totalAmount - this.expenseAmount;
-    // this.setTotal();
+    this.firebaseService.setAmountData(this.userid, this.totalAmount);
   }
 
   openIncomeModal = async () => {
@@ -85,7 +82,7 @@ export class HomePage implements OnInit {
     this.storage.set('income', this.incomeArr);
     this.incomeAmount = incomeData.amount;
     this.totalAmount = this.totalAmount + this.incomeAmount;
-    // this.setTotal();
+    this.firebaseService.setAmountData(this.userid, this.totalAmount);
   }
 
   openActionSheetData = async () => {
@@ -132,10 +129,12 @@ export class HomePage implements OnInit {
     (await modal).present();
   }
   handleExpenseListModalDismiss = (data) => {
+    console.log('expenseData = ', data);
     if (!data) {
       return false;
     } else {
       this.totalAmount += data.amount;
+      this.firebaseService.setAmountData(this.userid, this.totalAmount);
     }
   }
 

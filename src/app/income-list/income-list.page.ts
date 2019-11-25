@@ -14,25 +14,26 @@ export class IncomeListPage implements OnInit {
   allIncome: any;
   id: string;
   loading = true;
+  userId: string;
   constructor(private navParams: NavParams, private modalCtrl: ModalController, private firebaseService: FirebaseService,
               private fireStore: AngularFirestore) {
     this.allIncome = this.navParams.get('income');
   }
 
   ngOnInit() {
+    this.userId = localStorage.getItem('userId');
     this.getItems();
   }
 
   getItems() {
-    const incomeList = this.firebaseService.getIcome()
-    .subscribe(res => {
+    const incomeList = this.firebaseService.getIncome(this.userId).subscribe(res => {
       if (res) {
-        this.loading = false;
-        res.map(ele => {
-          this.allIncome =  ele.income;
-        });
+       this.loading = false;
+       this.allIncome = res;
+      } else {
+       this.loading = true;
       }
-    });
+     });
   }
 
   backToMenu = () => {

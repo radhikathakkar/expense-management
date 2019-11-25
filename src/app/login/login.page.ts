@@ -9,6 +9,7 @@ import { LoginService } from '../services/login.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FirebaseService } from '../services/firebase.service';
 import { TotalPage } from '../total/total.page';
+import { ToastService } from '../toast.service';
 
 
 
@@ -23,8 +24,8 @@ export class LoginPage implements OnInit {
   user: any;
   users: any;
   userId: string;
-  constructor(private fb: FormBuilder, private toastCtrl: ToastController, private router: Router, private fAuth: AngularFireAuth,
-    private firebaseService: FirebaseService, private aFirestore: AngularFirestore, private modalCtrl: ModalController) {
+  constructor(private fb: FormBuilder, private toastService: ToastService, private router: Router, private fAuth: AngularFireAuth,
+              private firebaseService: FirebaseService, private aFirestore: AngularFirestore, private modalCtrl: ModalController) {
     this.createLoginForm();
   }
 
@@ -48,30 +49,22 @@ export class LoginPage implements OnInit {
   async onSubmit() {
     const username = this.loginForm.value.username;
     const password = this.loginForm.value.password;
-    console.log('', this.users);
     this.users.map(async user => {
       if (user.username === username) {
         if (user.password === password) {
           this.userId = user.uid;
-          const toast = this.toastCtrl.create({
-            message: 'Successfully Logged In..',
-            duration: 3000
-          });
-          (await toast).present();
+          localStorage.setItem('userId', this.userId);
+          this.toastService.setToast('Successfully Logged In..');
           this.openIncomeModal();
+        } else {
+          this.toastService.setToast('Password wrong');
         }
-      } else {
-        const toast = this.toastCtrl.create({
-          message: 'User Details are wrong',
-          duration: 3000
-        });
-        (await toast).present();
       }
     });
   }
 
   openIncomeModal = async () => {
-    
+    // console.log('calling open total page at login ... ');
     const modal = this.modalCtrl.create({
       component: TotalPage,
       componentProps: {userId: this.userId}

@@ -11,12 +11,14 @@ import { FirebaseService } from '../services/firebase.service';
 export class ExpensePage implements OnInit {
 
   addExpenseForm: FormGroup;
+  userId: string;
 
   constructor(private modalCtrl: ModalController, private fb: FormBuilder, private firebaseService: FirebaseService) {
     this.createExpenseForm();
   }
 
   ngOnInit() {
+    this.userId = localStorage.getItem('userId');
   }
 
   createExpenseForm = () => {
@@ -32,7 +34,7 @@ export class ExpensePage implements OnInit {
 
   onSubmit = async () => {
     const expenseObj = this.addExpenseForm.value;
-    this.firebaseService.addExpense(expenseObj.amount, expenseObj.reason)
+    this.firebaseService.addExpense(this.userId, expenseObj.amount, expenseObj.reason)
     .then((res) => {
       console.log('res at add expense', res);
     });
