@@ -59,7 +59,6 @@ export class HomePage implements OnInit {
   }
 
   handleExpenseModalDismiss = (expenseData: any) => {
-    
     this.expenseData = expenseData;
     this.expenseArr.push(expenseData);
     this.storage.set('expense', this.expenseArr);

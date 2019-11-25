@@ -32,6 +32,7 @@ export class TotalPage implements OnInit {
 
   onSubmit = () => {
     this.totalAmount = this.addTotalAmountForm.value.totalAmount;
+    this.firebaseServive.setAmountData(this.userId, this.totalAmount);
     const navigationExtras: NavigationExtras = {
       queryParams: {
           userId: this.userId,

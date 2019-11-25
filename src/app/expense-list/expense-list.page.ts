@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, NavParams } from '@ionic/angular';
 import { FirebaseService } from '../services/firebase.service';
+import { ToastService } from '../toast.service';
 @Component({
   selector: 'app-expense-list',
   templateUrl: './expense-list.page.html',
@@ -11,7 +12,8 @@ export class ExpenseListPage implements OnInit {
   allExpenses: any = [];
   loading = true;
   userId: string;
-  constructor(private navParams: NavParams, private modalCtrl: ModalController, private firebaseService: FirebaseService) {
+  constructor(private navParams: NavParams, private modalCtrl: ModalController, private firebaseService: FirebaseService,
+              private toastService: ToastService) {
     this.allExpenses = this.navParams.get('expense');
   }
   ngOnInit() {
@@ -33,19 +35,14 @@ export class ExpenseListPage implements OnInit {
     this.modalCtrl.dismiss();
   }
   removeExpense = (expense: any) => {
-    console.log('demo', expense.expenseId);
-    this.firebaseService.removeExpense(this.userId, expense.expenseId)
-    .then(res => {
-      // console.log('res at remove expense = ', res);
+    const res = this.firebaseService.removeExpense(this.userId, expense.expenseId);
+    if (res) {
       const index = this.allExpenses.indexOf(expense);
       this.allExpenses.splice(index, 1);
-      res = this.allExpenses;
-      this.getList(res);
-      // console.log('this.allExpenses = ', this.allExpenses);
-      // console.log('res at updated expense =', res);
-    });
-    // const index = this.allExpenses.indexOf(item);
-    // this.allExpenses.splice(index, 1);
+    } else {
+      console.log('array is not updated .. ');
+    }
+    this.toastService.setToast('Amount Added To account .... ');
     this.modalCtrl.dismiss(expense);
   }
 

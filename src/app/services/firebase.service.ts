@@ -20,17 +20,16 @@ export class FirebaseService {
     });
   }
   userLogin = () => {
-    // return this.fAuth.auth.signInWithEmailAndPassword(username, password).then(res => res);
     return this.fireStore.collection<any>( 'users' ).valueChanges();
   }
   addIncome = (userId, amount, reason) => {
     const incomeId = this.fireStore.createId();
-    const data = this.fireStore.collection('amount').doc(userId).collection('income').add({
+    const data = this.fireStore.collection('amount').doc(userId).collection('income').doc(incomeId)
+    .set({
       incomeId,
       amount,
       reason
     });
-    console.log('data at add expense = ', data);
     return data;
   }
   getIncome = (userId) => {
@@ -38,20 +37,14 @@ export class FirebaseService {
   }
   addExpense = (userId, amount, reason) => {
     const expenseId = this.fireStore.createId();
-    const data = this.fireStore.collection('amount').doc(userId).collection('expense').add({
+    const data = this.fireStore.collection('amount').doc(userId).collection('expense').doc(expenseId)
+    .set({
       expenseId,
       amount,
       reason
     });
-    console.log('data at add expense = ', data);
     return data;
   }
-  // updateExpense = (userId, expenseId, amount, reason) => {
-  //   const data  = this.fireStore.collection('amount').doc(userId).collection('expense').doc(expenseId).update({
-  //     amount, reason
-  //   });
-  //   return data;
-  // }
   removeExpense = (userId, expenseId) => {
     const data = this.fireStore.collection('amount').doc(userId).collection('expense').doc(expenseId).delete();
     return data;
