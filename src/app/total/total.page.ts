@@ -45,7 +45,7 @@ export class TotalPage implements OnInit {
 
   skip = () => {
     this.firebaseServive.getAmountData(this.userId)
-    .subscribe(res => {
+    .subscribe((res: any) => {
       if (res) {
         this.totalAmount = res.totalAmount;
         const navigationExtras: NavigationExtras = {

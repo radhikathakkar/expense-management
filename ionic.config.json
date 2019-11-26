@@ -1,5 +1,7 @@
 {
   "name": "expense-management",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

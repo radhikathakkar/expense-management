@@ -35,13 +35,14 @@ export class FirebaseService {
   getIncome = (userId) => {
     return this.fireStore.collection('amount').doc(userId).collection('income').valueChanges();
   }
-  addExpense = (userId, amount, reason) => {
+  addExpense = (userId, amount, reason, date) => {
     const expenseId = this.fireStore.createId();
     const data = this.fireStore.collection('amount').doc(userId).collection('expense').doc(expenseId)
     .set({
       expenseId,
       amount,
-      reason
+      reason,
+      date
     });
     return data;
   }

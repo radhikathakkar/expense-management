@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { FirebaseService } from '../services/firebase.service';
+import { CATEGORY } from '../shared/category';
+
 
 @Component({
   selector: 'app-expense',
@@ -12,7 +14,7 @@ export class ExpensePage implements OnInit {
 
   addExpenseForm: FormGroup;
   userId: string;
-
+  Categories: any = CATEGORY;
   constructor(private modalCtrl: ModalController, private fb: FormBuilder, private firebaseService: FirebaseService) {
     this.createExpenseForm();
   }
@@ -24,7 +26,8 @@ export class ExpensePage implements OnInit {
   createExpenseForm = () => {
     this.addExpenseForm = this.fb.group({
       amount: ['', Validators.required],
-      reason: ['', Validators.required]
+      reason: ['', Validators.required],
+      date: new Date().toISOString()
     });
   }
 
@@ -34,7 +37,7 @@ export class ExpensePage implements OnInit {
 
   onSubmit = async () => {
     const expenseObj = this.addExpenseForm.value;
-    this.firebaseService.addExpense(this.userId, expenseObj.amount, expenseObj.reason)
+    this.firebaseService.addExpense(this.userId, expenseObj.amount, expenseObj.reason, expenseObj.date)
     .then((res) => {
       console.log('res at add expense', res);
     });

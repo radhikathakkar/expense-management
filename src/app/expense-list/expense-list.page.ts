@@ -24,6 +24,7 @@ export class ExpenseListPage implements OnInit {
   getItems() {
     const expenseList = this.firebaseService.getExpense(this.userId).subscribe(res => {
      if (res) {
+      console.log('expense list =', res);
       this.loading = false;
       this.allExpenses = res;
      } else {

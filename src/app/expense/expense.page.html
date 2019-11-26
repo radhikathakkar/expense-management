@@ -14,11 +14,20 @@
         <ion-card>
           <ion-card-content>
             <form [formGroup]="addExpenseForm" (ngSubmit)="onSubmit()">
+                <ion-item>
+                    <ion-label>Select Category</ion-label>
+                    <ion-select [compareWith]="Categories">
+                      <ion-select-option *ngFor="let category of Category">{{category}}</ion-select-option>
+                    </ion-select>
+                  </ion-item>
               <ion-item>
                 <ion-input type="number" placeholder="Enter amount" formControlName="amount"></ion-input>
               </ion-item>
               <ion-item>
                 <ion-textarea rows="6" placeholder="Enter Reason here..." formControlName="reason"></ion-textarea>
+              </ion-item>
+              <ion-item>
+                <ion-input type="date" placeholder="Select Date" formControlName="date"></ion-input>
               </ion-item>
               <ion-button type="submit" color="secondary" [disabled]="!addExpenseForm.valid">Add Expense</ion-button>
             </form>
